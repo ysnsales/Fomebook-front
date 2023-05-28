@@ -22,14 +22,14 @@ export default function SignUpPage() {
     const {confirmPassword, ...sendData} = formData;
     console.log(sendData)
 
-    const promise = api.signUp({ ...sendData });
+    const promise = api.signUp({ ...formData });
     promise.then((response) => {
       console.log(response.data);
       navigate("/");
     });
     promise.catch((error) => {
     if (error.response.status === 422) {
-        alert("O cadastro falhou. Verifique se os dados foram preenchidos corretamente! (A senha precisa ter no mínimo 3 caracteres)")
+        alert("O cadastro falhou. Verifique se os dados foram preenchidos corretamente!")
     }else if (error.response.status === 409) {
         alert("Email já utilizado")
     } 
@@ -64,7 +64,7 @@ export default function SignUpPage() {
         type="text" 
         name="profile_picture"
         onChange={handleChange}
-        value={formData.name}
+        value={formData.profile_picture}
         required/>
 
         <Input 
@@ -72,7 +72,7 @@ export default function SignUpPage() {
         type="text" 
         name="biography"
         onChange={handleChange}
-        value={formData.name}
+        value={formData.biography}
         required/>
 
         <Input 

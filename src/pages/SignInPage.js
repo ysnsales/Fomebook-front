@@ -2,11 +2,11 @@ import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import styled from "styled-components"
-//import { UserContext } from "../contexts/UserContext";
+import { UserContext } from "../contexts/UserContext";
 import api from "../services/api";
 
 export default function SignInPage() {
-  //const {user, setUser} = useContext(UserContext);
+  const {user, setUser} = useContext(UserContext);
   const [formData, setFormData] = useState({ email: '', password: '' });
   const navigate = useNavigate();
 
@@ -20,28 +20,22 @@ export default function SignInPage() {
     const promise = api.signIn({ ...formData });
     promise.then((response) => {
       console.log(response.data);
-      const {idUser, token, name} = response.data;
-      setUser({idUser, token, name});
-      localStorage.setItem("user", JSON.stringify({idUser, token, name}))
-      navigate("/home");
+      const {email, token} = response.data;
+      setUser({email, token});
+      localStorage.setItem("user", JSON.stringify({email, token}))
+      navigate("/");
     });
 
     promise.catch((error) => {
-      if ( error.response.status === 404) {
-        alert('Email não cadastrado')
-      }else if (error.response.status === 401) {
-        alert('Senha incorreta')
-      }else if (error.response.status === 422) {
+      if ( error.response.status === 404 || error.response.status === 401 || error.response.status === 422) {
         alert('Verifique se os dados foram preenchidos corretamente')
-      }
-     
+      };
     });
   }
 
   return (
-    <SingInContainer>
+    <SignInContainer>
       <Form onSubmit={handleSubmit}>
-        <MyWalletLogo />
         <Input 
         placeholder="E-mail" 
         type="email" 
@@ -65,22 +59,51 @@ export default function SignInPage() {
       <Link to="/sign-up">
         Primeira vez? Cadastre-se!
       </Link>
-    </SingInContainer>
+    </SignInContainer>
   )
 }
-const Form = styled.form`
-margin-bottom: 20px`
 
+const SignInContainer = styled.section`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  `
+
+const Form = styled.form`
+display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+        border-radius: 5px;
+        margin-bottom:20px`
+
+
+
+const Input = styled.input`
+        font-size: 20px;
+        width: calc(100% - 30px);
+        border-radius: 30px;
+        outline: none;
+        border: 1px solid #ccc;
+        padding: 15px;
+        margin: 1px;
+        :focus {
+            border: 2px solid #ffb6b6;
+            margin: 0px;
+    }` 
 const Button = styled.button`
         outline: none;
         border: none;
         border-radius: 30px;
-        background-color: #FFFFFF;
+        background-color: #b61c1c;
         font-size: 20px;
         font-weight: 600;
-        color: #b61c1c;
+        color: #FFFFFF;
         cursor: pointer;
         width: 100%;
         padding: 12px;
     `
-const Input = styled.input``
