@@ -10,6 +10,11 @@ function signUp(body) {
     return promise;
 };
 
+function getPosts(token){
+    const promise = axios.get(`${process.env.REACT_APP_API_URL}/posts/me`, createConfig(token));
+    return promise;
+}
+
 function createConfig(token){
     return{
         headers: {
@@ -21,7 +26,8 @@ function createConfig(token){
 
 const api = {
     signIn,
-    signUp
+    signUp,
+    getPosts
 };
 
 export default api;

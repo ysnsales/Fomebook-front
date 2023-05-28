@@ -13,7 +13,7 @@ export default function UserProvider({children}){
         if (lsUser === null & (currentUrl !== '/' && currentUrl !== '/sign-up')){
             navigate("/")
         }else {
-            navigate("/", {state:{lsUser}})
+            navigate("/home", {state:{lsUser}})
         }
     }, [])
     
