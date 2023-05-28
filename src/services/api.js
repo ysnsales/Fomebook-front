@@ -13,6 +13,12 @@ function signUp(body) {
 function getPosts(token){
     const promise = axios.get(`${process.env.REACT_APP_API_URL}/posts/me`, createConfig(token));
     return promise;
+};
+
+
+function createNewPost(token, body){
+    const promise = axios.post(`${process.env.REACT_APP_API_URL}/posts`, body, createConfig(token));
+    return promise;
 }
 
 function createConfig(token){
@@ -21,13 +27,15 @@ function createConfig(token){
             Authorization: `Bearer ${token}`
         }
 }
-}
+};
+
 
 
 const api = {
     signIn,
     signUp,
-    getPosts
+    getPosts,
+    createNewPost
 };
 
 export default api;

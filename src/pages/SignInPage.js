@@ -20,9 +20,9 @@ export default function SignInPage() {
     const promise = api.signIn({ ...formData });
     promise.then((response) => {
       console.log(response.data);
-      const {email, token} = response.data;
-      setUser({email, token});
-      localStorage.setItem("user", JSON.stringify({email, token}))
+      const {email, token, name, biography} = response.data;
+      setUser({email, token, name, biography});
+      localStorage.setItem("user", JSON.stringify({email, token, name, biography}))
       navigate("/home");
     });
 
@@ -79,8 +79,7 @@ display: flex;
         gap: 15px;
         width: 100%;
         border-radius: 5px;
-        margin-bottom:20px`
-
+        margin-bottom:20px;`
 
 
 const Input = styled.input`

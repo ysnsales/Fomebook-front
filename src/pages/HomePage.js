@@ -4,6 +4,7 @@ import {  useNavigate} from "react-router-dom";
 import api from "../services/api";
 import { UserContext } from "../contexts/UserContext";
 import { IoFastFoodOutline } from "react-icons/io5";
+import { IoAddCircle } from "react-icons/io5";
 
 export default function HomePage(){
 
@@ -11,6 +12,9 @@ export default function HomePage(){
   const [posts, setPosts] = useState([]);
 
   const [email, setEmail] = useState(localStorage.email);
+  const [name, setName] = useState(localStorage.name);
+  const [biography, setBiography] = useState(localStorage.biography);
+
   const navigate = useNavigate();
 
   useEffect(loadPosts, []);
@@ -18,12 +22,14 @@ export default function HomePage(){
   function loadPosts(){
     const promise = api.getPosts(user.token);
     promise.then((response) => {
-      console.log(response.data);
-      setEmail(user.email)
+      setEmail(user.email);
+      setName(user.name);
+      setBiography(user.biography);
       setPosts(response.data)
       console.log(response.data);
     })
   };
+
 
     return(
         <HomePageContainer>
@@ -31,8 +37,8 @@ export default function HomePage(){
                 <img src="https://cdn-icons-png.flaticon.com/512/4792/4792929.png"/>
 
                 <div>
-                    <h1>Nome</h1>
-                    <h2>Biografia</h2>
+                    <h1>{name}</h1>
+                    <h2>{biography}</h2>
                     <div>
                         <button>Ver seguidores</button>
                         <button>Ver quem eu sigo</button>
@@ -47,7 +53,7 @@ export default function HomePage(){
             <Top>
               <div >
                 <img src="https://cdn-icons-png.flaticon.com/512/4792/4792929.png"/>
-                user
+                {name}
               </div>
             </Top>
 
@@ -69,7 +75,9 @@ export default function HomePage(){
             </Post>
             </>)}
             
-
+            <AddPost>
+            <IoAddCircle onClick={() => navigate("/new-post")}/>
+            </AddPost>
         </HomePageContainer>
     )
 };
@@ -166,4 +174,10 @@ const Botton = styled.div`
     p {
         margin-left: 8px;
     }
+`
+const AddPost = styled.div`
+position: fixed;
+bottom: 90px;
+right: 100px;
+font-size: 100px;
 `

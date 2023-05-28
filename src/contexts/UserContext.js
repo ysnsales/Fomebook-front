@@ -10,9 +10,9 @@ export default function UserProvider({children}){
     const currentUrl = window.location.href;
     console.log(lsUser)
     useEffect(() => {
-        if (lsUser === null & (currentUrl !== '/' && currentUrl !== '/sign-up')){
+        if (lsUser === null && (currentUrl !== '/' && currentUrl !== '/sign-up')){
             navigate("/")
-        }else {
+        }else if (lsUser !== null) {
             navigate("/home", {state:{lsUser}})
         }
     }, [])
