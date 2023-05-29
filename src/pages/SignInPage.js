@@ -10,6 +10,9 @@ export default function SignInPage() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const navigate = useNavigate();
 
+  const imageUrl = "https://img.freepik.com/vetores-premium/padrao-sem-emenda-de-fast-food-ornamento-colorido-de-comida-deliciosa-ilustracao-do-vetor-dos-desenhos-animados-design-moderno-para-decoracao-papel-de-parede-plano-de-fundo-texteis_534604-530.jpg?w=2000"
+
+
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
@@ -34,7 +37,8 @@ export default function SignInPage() {
   }
 
   return (
-    <SignInContainer>
+    <SignInContainer imageUrl={imageUrl}>
+      <h1>Login</h1>
       <Form onSubmit={handleSubmit}>
         <Input 
         placeholder="E-mail" 
@@ -56,20 +60,29 @@ export default function SignInPage() {
         <Button type="submit">Entrar</Button>
       </Form>
 
-      <Link to="/sign-up">
+      <CustomLink to="/sign-up">
         Primeira vez? Cadastre-se!
-      </Link>
+      </CustomLink>
     </SignInContainer>
   )
 }
 
 const SignInContainer = styled.section`
+  background-image: url(${props => props.imageUrl});
+  background-size: cover;
+  background-position: center;
   height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  `
+  justify-content: flex-start;
+  h1{
+    font-family: 'Satisfy', cursive;
+    font-size: 90px;
+  }
+  
+`
 
 const Form = styled.form`
 display: flex;
@@ -77,14 +90,15 @@ display: flex;
         justify-content: center;
         align-items: center;
         gap: 15px;
-        width: 100%;
+        width: 60%;
         border-radius: 5px;
-        margin-bottom:20px;`
-
+        margin-bottom:20px
+        `;
 
 const Input = styled.input`
-        font-size: 20px;
+        font-size: 25px;
         width: calc(100% - 30px);
+        height: 40px;
         border-radius: 30px;
         outline: none;
         border: 1px solid #ccc;
@@ -93,16 +107,25 @@ const Input = styled.input`
         :focus {
             border: 2px solid #ffb6b6;
             margin: 0px;
-    }` 
+    }` ;
+
 const Button = styled.button`
         outline: none;
         border: none;
         border-radius: 30px;
         background-color: #b61c1c;
-        font-size: 20px;
+        font-size: 25px;
         font-weight: 600;
         color: #FFFFFF;
         cursor: pointer;
         width: 100%;
+        height: 70px;
         padding: 12px;
     `
+const CustomLink = styled(Link)`
+  color: #000000;
+  text-decoration: none;
+  font-family: 'Wix Madefor Display', sans-serif;
+    font-size: 20px;
+
+`;

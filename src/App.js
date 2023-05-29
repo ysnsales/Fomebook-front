@@ -34,7 +34,6 @@ export default function App(){
 }
 
 const PagesContainer = styled.main`
-  width: calc(100vw - 50px);
+  width: 100%;
   max-height: 100vh;
-  padding: 25px;
 `

@@ -1,6 +1,7 @@
 import styled from "styled-components"
 import { useState, useEffect, useContext } from "react";
 import {  useNavigate} from "react-router-dom";
+import { format } from "date-fns";
 import api from "../services/api";
 import { UserContext } from "../contexts/UserContext";
 import { IoFastFoodOutline } from "react-icons/io5";
@@ -10,7 +11,8 @@ export default function HomePage(){
 
   const {user} = useContext(UserContext)
   const [posts, setPosts] = useState([]);
-  const [likes, setLikes] = useState({}); 
+  const [likes, setLikes] = useState({});
+  const [date, setDate] = useState("") 
 
   const [email, setEmail] = useState(localStorage.email);
   const [name, setName] = useState(localStorage.name);
@@ -83,6 +85,7 @@ export default function HomePage(){
               <div>
                 <IoFastFoodOutline onClick={() => handleLike(p.id, p.likes)}/>
                 <p>{p.likes} pessoas curtiram sua foto </p>
+                <p>{p.createdAt}</p>
               </div>
               <div> 
                {p.description}
