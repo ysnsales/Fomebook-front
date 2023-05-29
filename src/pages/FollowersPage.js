@@ -6,17 +6,41 @@ import { UserContext } from "../contexts/UserContext";
 
 export default function FollowersPage(){
 
+    const { user } = useContext(UserContext);
+    const [followers, setFollowers] = useState([])
+
+    useEffect(() => {
+        loadFollowers();
+      }, []);
+    
+      function loadFollowers() {
+        const promise = api.getFollowers(user.token);
+        promise
+          .then((response) => {
+            console.log(response.data);
+            setFollowers(response.data);
+            
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+
+
     return (
         <PageContainer> 
-        <UserInfo>
-        <img src="https://cdn-icons-png.flaticon.com/512/4792/4792929.png"/>
+            <h1>Meus seguidores</h1>
+            {followers.map(follower => 
+                <UserInfo key={follower.id}>
+                    <img src={follower.profile_picture}/>
 
-        <div>
-            <h1>nome</h1>
-            <h2>biografia</h2>
-        </div>
+                     <div>
+                         <h1>{follower.name}</h1>
+                        <h2>{follower.biography}</h2>
+                    </div>
 
-    </UserInfo>
+                </UserInfo>
+            )}
     </PageContainer>
     )
 }
