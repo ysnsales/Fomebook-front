@@ -4,19 +4,43 @@ import {  useNavigate} from "react-router-dom";
 import api from "../services/api";
 import { UserContext } from "../contexts/UserContext";
 
-export default function FollowingPage(){
+export default function FollowersPage(){
+
+    const { user } = useContext(UserContext);
+    const [following, setFollowing] = useState([])
+
+    useEffect(() => {
+        loadFollowers();
+      }, []);
+    
+      function loadFollowers() {
+        const promise = api.getFollowing(user.token);
+        promise
+          .then((response) => {
+            console.log(response.data);
+            setFollowing(response.data);
+            
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      };
+
 
     return (
         <PageContainer> 
-        <UserInfo>
-        <img src="https://cdn-icons-png.flaticon.com/512/4792/4792929.png"/>
+            <h1>Meus seguidores</h1>
+            {following.map(following => 
+                <UserInfo key={following.id}>
+                    <img src={following.profile_picture}/>
 
-        <div>
-            <h1>nome</h1>
-            <h2>biografia</h2>
-        </div>
+                     <div>
+                         <h1>{following.name}</h1>
+                        <h2>{following.biography}</h2>
+                    </div>
 
-    </UserInfo>
+                </UserInfo>
+            )}
     </PageContainer>
     )
 }
