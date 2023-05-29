@@ -25,13 +25,16 @@ export default function FollowersPage(){
             console.error(error);
           });
       };
+      function handleClick(id){
+        navigate(`/posts/${id}`);
+      }
 
 
     return (
         <PageContainer> 
             <p>Meus seguidores</p>
             {followers.map(follower => 
-                <UserInfo key={follower.id}>
+                <UserInfo onClick={() => handleClick(following.id)} key={follower.id}>
                     <img src={follower.profile_picture}/>
 
                      <div>

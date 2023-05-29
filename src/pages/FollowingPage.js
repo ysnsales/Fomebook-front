@@ -8,6 +8,10 @@ export default function FollowersPage(){
 
     const { user } = useContext(UserContext);
     const [following, setFollowing] = useState([])
+    const [posts, setPosts] = useState([]);
+    const [userInfo, setUserInfo] = useState([])
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         loadFollowers();
@@ -26,12 +30,16 @@ export default function FollowersPage(){
           });
       };
 
+      function handleClick(id){
+        navigate(`/posts/${id}`);
+      }
+
 
     return (
         <PageContainer> 
             <p>Quem eu sigo</p>
             {following.map(following => 
-                <UserInfo key={following.id}>
+                <UserInfo onClick={() => handleClick(following.id)} key={following.id}>
                     <img src={following.profile_picture}/>
 
                      <div>
