@@ -50,6 +50,11 @@ function createConfig(token){
 }
 };
 
+function addLike(token, postId) {
+    const promise = axios.put(`${process.env.REACT_APP_API_URL}/posts/${postId}/like`, null, createConfig(token));
+    return promise;
+};
+
 
 
 const api = {
@@ -60,7 +65,8 @@ const api = {
     getUserById,
     followUser,
     getFollowers,
-    getFollowing
+    getFollowing,
+    addLike
 };
 
 export default api;

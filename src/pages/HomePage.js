@@ -10,6 +10,7 @@ export default function HomePage(){
 
   const {user} = useContext(UserContext)
   const [posts, setPosts] = useState([]);
+  const [likes, setLikes] = useState({}); 
 
   const [email, setEmail] = useState(localStorage.email);
   const [name, setName] = useState(localStorage.name);
@@ -32,6 +33,20 @@ export default function HomePage(){
       console.log(response.data);
     })
   };
+
+  function handleLike(postId, postLikes) {
+    const promise = api.addLike(user.token, postId);
+    setLikes(postLikes)
+    promise
+      .then(() => {
+        // Increment the number of likes locally
+        setLikes(postLikes + 1);
+        loadPosts();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
 
 
     return(
@@ -66,8 +81,8 @@ export default function HomePage(){
 
             <Botton>
               <div>
-                <IoFastFoodOutline />
-                <p>x pessoas curtiram sua foto </p>
+                <IoFastFoodOutline onClick={() => handleLike(p.id, p.likes)}/>
+                <p>{p.likes} pessoas curtiram sua foto </p>
               </div>
               <div> 
                {p.description}
