@@ -27,7 +27,16 @@ export default function UsersProfile() {
         .catch((error) => {
           console.error(error);
         });
-    }
+    };
+
+
+    function handleFollow() {
+        const promise = api.followUser(user.token, userInfo.email);
+        promise.then((response) => {
+          console.log("Usuário seguido com sucesso");
+          
+        })
+      }
 
     return(
         <HomePageContainer>
@@ -37,7 +46,7 @@ export default function UsersProfile() {
                     <h1>{userInfo.name}</h1>
                     <h2>{userInfo.biography}</h2>
                     <div>
-                        <button>Seguir</button>
+                        <button onClick={handleFollow}>Seguir</button>
                     </div>
                 </div>
             </UserInfo>

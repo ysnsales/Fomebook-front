@@ -23,7 +23,13 @@ function createNewPost(token, body){
 function getUserById(token, id){
     const promise = axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`, createConfig(token));
     return promise;
-}
+};
+
+function followUser(token, following) {
+    const body = { following }
+    const promise = axios.post(`${process.env.REACT_APP_API_URL}/following`, body, createConfig(token));
+    return promise;
+  }
 
 
 function createConfig(token){
@@ -41,7 +47,8 @@ const api = {
     signUp,
     getPosts,
     createNewPost,
-    getUserById
+    getUserById,
+    followUser
 };
 
 export default api;
