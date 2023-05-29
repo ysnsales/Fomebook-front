@@ -83,12 +83,15 @@ export default function HomePage(){
 
             <Botton>
               <div>
-                <IoFastFoodOutline onClick={() => handleLike(p.id, p.likes)}/>
-                <p>{p.likes} pessoas curtiram sua foto </p>
+                <IoFastFoodOutline size="35px" onClick={() => handleLike(p.id, p.likes)}/>
+                <div>
+                <p>{p.likes} pessoas curtiram sua foto! </p>
                 <p>{p.createdAt}</p>
+                </div>
+
               </div>
               <div> 
-               {p.description}
+               <p>{p.description}</p>
               </div>
 
             </Botton>
@@ -106,30 +109,42 @@ export default function HomePage(){
 const HomePageContainer = styled.section`
 display: flex;
 flex-direction: column;
-  justify-content: center;
-  align-items: center;
+justify-content: center;
+align-items: center;
+font-family: 'Wix Madefor Display', sans-serif;;
   `
 
 const UserInfo = styled.div`
 padding: 15px;
-background-color: pink;
+margin-top: 50px;
+border-radius: 3px;
+border: 1px solid #DBDBDB;
+display: flex;
 width: 60%;
 display: flex;
 align-items: center;
-justify-content: space-around;
-    h1, h2{
-        font-size: 16px;
+justify-content: flex-start;
+    h1{
+        font-size: 30px;
+        margin-bottom: 5px;
+        margin-top: 0px;
     }
-    img {
-        width: 100px;
-        height: 100px;
+    h2{
+        font-size: 20px;
+        margin-top: 0px;
+        color: gray;
+
+    }
+        img {
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
+        margin-right: 15px;
     }
     div {
         display: flex;
         flex-direction: column;
         width: 80%;
-
         div {
             display: flex;
             flex-direction: row;
@@ -141,11 +156,13 @@ justify-content: space-around;
         border: none;
         border-radius: 30px;
         background-color: #b61c1c;
+        font-family: 'Wix Madefor Display', sans-serif;;
         font-size: 15px;
         font-weight: 400;
         color: #FFFFFF;
         cursor: pointer;
-        width: 200px;
+        width: 190px;
+        height: 35px;
         padding: 5px;
         margin-right: 15px;
     }
@@ -165,13 +182,12 @@ const Top = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 13px 16px;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 500;
     div {
         display: flex;
         align-items: center;
-        margin-bottom: 15px;
-    }
+        margin-bottom: 10px;}
     img {
         width: 32px;
         height: 32px;
@@ -185,15 +201,23 @@ img {
 }`
 
 const Botton = styled.div`
+    padding: 13px 16px;
     div {
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        padding: 13px 16px;
-        font-size: 20px;
+        div{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+    
     }
+    
     p {
         margin-left: 8px;
+        font-size: 20px;
+
     }
 `
 const AddPost = styled.div`

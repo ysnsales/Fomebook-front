@@ -29,7 +29,7 @@ export default function FollowersPage(){
 
     return (
         <PageContainer> 
-            <h1>Meus seguidores</h1>
+            <p>Meus seguidores</p>
             {followers.map(follower => 
                 <UserInfo key={follower.id}>
                     <img src={follower.profile_picture}/>
@@ -51,44 +51,48 @@ display: flex;
 flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-family: 'Wix Madefor Display', sans-serif;
+  p{
+        font-size: 50px;
+    }
+
   `
 const UserInfo = styled.div`
 padding: 15px;
-background-color: pink;
+margin-top: 15px;
+border-radius: 3px;
+border: 1px solid #DBDBDB;
+display: flex;
 width: 60%;
 display: flex;
 align-items: center;
-justify-content: space-around;
-    h1, h2{
-        font-size: 16px;
+justify-content: flex-start;
+    h1{
+        font-size: 30px;
+        margin-bottom: 5px;
+        margin-top: 0px;
     }
-    img {
-        width: 100px;
-        height: 100px;
+    h2{
+        font-size: 20px;
+        margin-top: 0px;
+        color: gray;
+
+    }
+        img {
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
+        margin-right: 15px;
     }
     div {
         display: flex;
         flex-direction: column;
         width: 80%;
-
         div {
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
         }
     }
-    button {
-        outline: none;
-        border: none;
-        border-radius: 30px;
-        background-color: #b61c1c;
-        font-size: 15px;
-        font-weight: 400;
-        color: #FFFFFF;
-        cursor: pointer;
-        width: 200px;
-        padding: 5px;
-        margin-right: 15px;
-    }
+
 `

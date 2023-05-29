@@ -10,7 +10,7 @@ export default function SignUpPage() {
   const [formData, setFormData] = useState({name:'', email:'', profile_picture:'', biography:'', password:'', confirmPassword:''});
   const navigate = useNavigate();
 
-  const imageUrl = "https://img.freepik.com/vetores-premium/padrao-sem-emenda-de-fast-food-ornamento-colorido-de-comida-deliciosa-ilustracao-do-vetor-dos-desenhos-animados-design-moderno-para-decoracao-papel-de-parede-plano-de-fundo-texteis_534604-530.jpg?w=2000"
+  const imageUrl = "https://img.freepik.com/vetores-gratis/fundo-de-fast-food-desenhado-a-mao_23-2149013389.jpg?w=2000"
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -118,6 +118,8 @@ const SingUpContainer = styled.section`
   h1{
     font-family: 'Satisfy', cursive;
     font-size: 90px;
+    margin-top: 150px;
+    margin-bottom: 0px;
   }
   
 `
