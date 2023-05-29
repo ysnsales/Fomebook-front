@@ -15,11 +15,16 @@ function getPosts(token){
     return promise;
 };
 
-
 function createNewPost(token, body){
     const promise = axios.post(`${process.env.REACT_APP_API_URL}/posts`, body, createConfig(token));
     return promise;
+};
+
+function getUserById(token, id){
+    const promise = axios.get(`${process.env.REACT_APP_API_URL}/posts/${id}`, createConfig(token));
+    return promise;
 }
+
 
 function createConfig(token){
     return{
@@ -35,7 +40,8 @@ const api = {
     signIn,
     signUp,
     getPosts,
-    createNewPost
+    createNewPost,
+    getUserById
 };
 
 export default api;

@@ -12,7 +12,7 @@ export default function UserProvider({children}){
     useEffect(() => {
         if (lsUser === null && (currentUrl !== '/' && currentUrl !== '/sign-up')){
             navigate("/")
-        }else if (lsUser !== null) {
+        }else if (lsUser !== null && currentUrl === "/") {
             navigate("/home", {state:{lsUser}})
         }
     }, [])

@@ -20,9 +20,9 @@ export default function SignInPage() {
     const promise = api.signIn({ ...formData });
     promise.then((response) => {
       console.log(response.data);
-      const {email, token, name, biography} = response.data;
+      const {email, token, name, biography, profile_picture} = response.data;
       setUser({email, token, name, biography});
-      localStorage.setItem("user", JSON.stringify({email, token, name, biography}))
+      localStorage.setItem("user", JSON.stringify({email, token, name, biography, profile_picture}))
       navigate("/home");
     });
 

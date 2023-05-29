@@ -1,62 +1,54 @@
 import styled from "styled-components"
 import { useState, useEffect, useContext } from "react";
-import {  useNavigate} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../services/api";
 import { UserContext } from "../contexts/UserContext";
 import { IoFastFoodOutline } from "react-icons/io5";
-import { IoAddCircle } from "react-icons/io5";
 
-export default function HomePage(){
-
-  const {user} = useContext(UserContext)
-  const [posts, setPosts] = useState([]);
-
-  const [email, setEmail] = useState(localStorage.email);
-  const [name, setName] = useState(localStorage.name);
-  const [biography, setBiography] = useState(localStorage.biography);
-  const [profilePicture, setProfilePicture] = useState(localStorage.profile_picture);
-
-
-  const navigate = useNavigate();
-
-  useEffect(loadPosts, []);
-
-  function loadPosts(){
-    const promise = api.getPosts(user.token);
-    promise.then((response) => {
-      setEmail(user.email);
-      setName(user.name);
-      setBiography(user.biography);
-      setProfilePicture(user.profile_picture);
-      setPosts(response.data)
-      console.log(response.data);
-    })
-  };
-
+export default function UsersProfile() {
+    const { user } = useContext(UserContext);
+    const [posts, setPosts] = useState([]);
+    const [userInfo, setUserInfo] = useState([])
+    const { id } = useParams(); // Obter o ID da URL
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+      loadPosts();
+    }, [id]);
+  
+    function loadPosts() {
+      const promise = api.getUserById(user.token, id);
+      promise
+        .then((response) => {
+          console.log(response.data);
+          setUserInfo(response.data[1])
+          setPosts(response.data[0])
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
 
     return(
         <HomePageContainer>
             <UserInfo>
-                <img src={profilePicture}/>
-
+                <img src={userInfo.profile_picture}/>
                 <div>
-                    <h1>{name}</h1>
-                    <h2>{biography}</h2>
+                    <h1>{userInfo.name}</h1>
+                    <h2>{userInfo.biography}</h2>
                     <div>
-                        <button onClick={() => navigate("/followers")}>Ver seguidores</button>
-                        <button onClick={() => navigate("/following")}>Ver quem eu sigo</button>
+                        <button>Seguir</button>
                     </div>
                 </div>
-
             </UserInfo>
 
-        {posts.map(p => 
+            {posts.map(p => 
             <>
             <Post key={p.id}>
             <Top>
               <div >
-                <img src={profilePicture}/>
-                {name}
+                <img src={userInfo.profile_picture}/>
+                {userInfo.name}
               </div>
             </Top>
 
@@ -77,10 +69,8 @@ export default function HomePage(){
 
             </Post>
             </>)}
-            
-            <AddPost>
-            <IoAddCircle onClick={() => navigate("/new-post")}/>
-            </AddPost>
+
+        
         </HomePageContainer>
     )
 };
