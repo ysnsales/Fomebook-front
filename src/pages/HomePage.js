@@ -5,6 +5,8 @@ import { format } from "date-fns";
 import api from "../services/api";
 import { UserContext } from "../contexts/UserContext";
 import { IoFastFoodOutline } from "react-icons/io5";
+import { IoFastFoodSharp } from "react-icons/io5";
+
 import { IoAddCircle } from "react-icons/io5";
 
 export default function HomePage(){
@@ -12,12 +14,15 @@ export default function HomePage(){
   const {user} = useContext(UserContext)
   const [posts, setPosts] = useState([]);
   const [likes, setLikes] = useState({});
-  const [date, setDate] = useState("") 
+  const [liked, setLiked] = useState(false)
+  const [date, setDate] = useState(""); 
 
   const [email, setEmail] = useState(localStorage.email);
   const [name, setName] = useState(localStorage.name);
   const [biography, setBiography] = useState(localStorage.biography);
   const [profilePicture, setProfilePicture] = useState(localStorage.profile_picture);
+
+  const imageUrl = "https://img.freepik.com/vetores-premium/padrao-sem-emenda-de-fast-food-ornamento-colorido-de-comida-deliciosa-ilustracao-do-vetor-dos-desenhos-animados-design-moderno-para-decoracao-papel-de-parede-plano-de-fundo-texteis_534604-530.jpg?w=2000"
 
 
   const navigate = useNavigate();
@@ -37,12 +42,18 @@ export default function HomePage(){
   };
 
   function handleLike(postId, postLikes) {
-    const promise = api.addLike(user.token, postId);
-    setLikes(postLikes)
+
+    const promise = !liked ? 
+    api.addLike(user.token, postId)
+    :
+    api.removeLike(user.token, postId)
+
+    console.log(promise)
     promise
       .then(() => {
-        // Increment the number of likes locally
-        setLikes(postLikes + 1);
+        (!liked ? 
+            setLiked(true) :
+            setLiked(false) )
         loadPosts();
       })
       .catch((error) => {
@@ -50,9 +61,8 @@ export default function HomePage(){
       });
   }
 
-
     return(
-        <HomePageContainer>
+        <HomePageContainer imageUrl={imageUrl}>
             <UserInfo>
                 <img src={profilePicture}/>
 
@@ -66,9 +76,8 @@ export default function HomePage(){
                 </div>
 
             </UserInfo>
-
-        {posts.map(p => 
-            <>
+            <Posts>
+            {posts.map(p => 
             <Post key={p.id}>
             <Top>
               <div >
@@ -83,7 +92,19 @@ export default function HomePage(){
 
             <Botton>
               <div>
-                <IoFastFoodOutline size="35px" onClick={() => handleLike(p.id, p.likes)}/>
+              {liked ? (
+              <IoFastFoodSharp
+                size="35px"
+                onClick={() => handleLike(p.id, p.likes)}
+                color="#b61c1c"
+              />
+            ) : (
+              <IoFastFoodOutline
+                size="35px"
+                onClick={() => handleLike(p.id, p.likes)}
+                color="black"
+              />
+            )}
                 <div>
                 <p>{p.likes} pessoas curtiram sua foto! </p>
                 <p>{p.createdAt}</p>
@@ -97,8 +118,10 @@ export default function HomePage(){
             </Botton>
 
             </Post>
-            </>)}
-            
+            )}
+
+            </Posts>
+
             <AddPost>
             <IoAddCircle onClick={() => navigate("/new-post")}/>
             </AddPost>
@@ -107,11 +130,16 @@ export default function HomePage(){
 };
 
 const HomePageContainer = styled.section`
+ background-image: url(${props => props.imageUrl});
+  background-size: 800px;
+  background-repeat: repeat;
+  background-position: center;
+  height: 130vw;
 display: flex;
 flex-direction: column;
-justify-content: center;
 align-items: center;
-font-family: 'Wix Madefor Display', sans-serif;;
+justify-content: flex-start;
+font-family: 'Wix Madefor Display', sans-serif;
   `
 
 const UserInfo = styled.div`
@@ -124,6 +152,7 @@ width: 60%;
 display: flex;
 align-items: center;
 justify-content: flex-start;
+background-color: white;
     h1{
         font-size: 30px;
         margin-bottom: 5px;
@@ -168,14 +197,25 @@ justify-content: flex-start;
     }
 `
 
+const Posts = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: flex-start;
+padding: 15px;
+border-radius: 3px;
+width: 60%;
+margin-bottom: 200px;`
+
 const Post = styled.div`
     border-radius: 3px;
     border: 1px solid #DBDBDB;
     display: flex;
     flex-direction: column;
     margin-top: 18px;
-    width: 60%;
+    width: 100%;
     padding: 15px;
+    background-color: white;
 `
 
 const Top = styled.div`
@@ -192,6 +232,7 @@ const Top = styled.div`
         width: 32px;
         height: 32px;
         margin-right: 10px;
+        border-radius: 50%;
     }
 `
 

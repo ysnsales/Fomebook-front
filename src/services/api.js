@@ -51,9 +51,14 @@ function createConfig(token){
 };
 
 function addLike(token, postId) {
-    const promise = axios.put(`${process.env.REACT_APP_API_URL}/posts/${postId}/like`, null, createConfig(token));
+    const promise = axios.put(`${process.env.REACT_APP_API_URL}/posts/${postId}/addLike`, null, createConfig(token));
     return promise;
 };
+
+function removeLike(token, postId) {
+    const promise = axios.put(`${process.env.REACT_APP_API_URL}/posts/${postId}/removeLike`, null, createConfig(token));
+    return promise;
+}
 
 
 
@@ -66,7 +71,8 @@ const api = {
     followUser,
     getFollowers,
     getFollowing,
-    addLike
+    addLike,
+    removeLike
 };
 
 export default api;

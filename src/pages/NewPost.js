@@ -10,6 +10,8 @@ export default function NewPost(){
     const navigate = useNavigate();
     const {user} = useContext(UserContext);
     const [formData, setFormData] = useState({picture:'', description:''})
+
+    const imageUrl = "https://img.freepik.com/vetores-premium/padrao-sem-emenda-de-fast-food-ornamento-colorido-de-comida-deliciosa-ilustracao-do-vetor-dos-desenhos-animados-design-moderno-para-decoracao-papel-de-parede-plano-de-fundo-texteis_534604-531.jpg?w=2000";
       
       
         function handleChange(e) {
@@ -40,7 +42,7 @@ export default function NewPost(){
 
 
     return (
-            <PostContainer>
+            <PostContainer imageUrl={imageUrl}>
             <div>
               <h1>Novo Post</h1>
               <Form onSubmit={handleSubmit}>
@@ -67,19 +69,30 @@ export default function NewPost(){
     }
         
 const PostContainer = styled.main`
+ background-image: url(${props => props.imageUrl});
+  background-size: 800px;
+  background-repeat: repeat;
+  background-position: center;
+  height: 130vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     div{    
         width: 60%;
         border-radius: 3px;
-        border: 1px solid #DBDBDB;
         padding: 15px;
         display: flex;
         flex-direction: column;
         align-items:center;
-        justify-content: center; }        
+        justify-content: center;}
+    h1{
+    font-family: 'Satisfy', cursive;
+    font-size: 90px;
+    margin-top: 150px;
+    margin-bottom: 20px;
+    color: white;
+  }        
         `
 const Form = styled.form`
     display: flex;
@@ -90,7 +103,6 @@ const Form = styled.form`
     width: 100%;
     border-radius: 5px;
     margin-bottom:20px;`
-
 
 const Input = styled.input`
     font-size: 20px;

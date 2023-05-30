@@ -9,6 +9,9 @@ export default function FollowersPage(){
     const { user } = useContext(UserContext);
     const [followers, setFollowers] = useState([])
 
+    const imageUrl = "https://img.freepik.com/vetores-premium/padrao-sem-emenda-de-fast-food-ornamento-colorido-de-comida-deliciosa-ilustracao-do-vetor-dos-desenhos-animados-design-moderno-para-decoracao-papel-de-parede-plano-de-fundo-texteis_534604-530.jpg?w=2000"
+
+
     useEffect(() => {
         loadFollowers();
       }, []);
@@ -31,7 +34,7 @@ export default function FollowersPage(){
 
 
     return (
-        <PageContainer> 
+        <PageContainer imageUrl={imageUrl}> 
             <p>Meus seguidores</p>
             {followers.map(follower => 
                 <UserInfo onClick={() => handleClick(following.id)} key={follower.id}>
@@ -50,13 +53,21 @@ export default function FollowersPage(){
 
 
 const PageContainer = styled.section`
+ background-image: url(${props => props.imageUrl});
+  background-size: 800px;
+  background-repeat: repeat;
+  background-position: center;
 display: flex;
 flex-direction: column;
-  justify-content: center;
+height: 130vw;;
+ 
   align-items: center;
   font-family: 'Wix Madefor Display', sans-serif;
   p{
-        font-size: 50px;
+    font-family: 'Satisfy', cursive;
+    font-size: 90px;
+    margin-top: 150px;
+    margin-bottom: 20px; 
     }
 
   `
@@ -70,6 +81,7 @@ width: 60%;
 display: flex;
 align-items: center;
 justify-content: flex-start;
+background-color: white;
     h1{
         font-size: 30px;
         margin-bottom: 5px;
